@@ -93,7 +93,7 @@ class KNNClassifierTests(unittest.TestCase):
 
 if __name__ =="__main__":
     #unittest.main()
-    dating_data_matrix, dating_labels = file_to_matrix('dating_test_set2.txt')
+    dating_data_matrix, dating_labels = file_to_matrix('dating_test_set_2.txt')
     print (dating_data_matrix[:20], dating_labels[:20])
     scatter_plot(dating_data_matrix,labels = dating_labels)
     classifier=KNNClassifier(dating_data_matrix, dating_labels,20)
