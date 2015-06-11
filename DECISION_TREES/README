@@ -1,0 +1,38 @@
+DECISION TREE ALGORITHM
+====================================
+func:CreateBranch():
+    Check if every item in the dataset is in the same class:
+        if so return the class label
+        Else:
+            find the best feature to split the data
+            split the dataset
+            create a branch node
+            for each split:
+                call createBranch and add the result to the branch node
+            return branch node
+
+
+
+GENERAL APPROACH to DECISION TREES:
+==========================================================================
+1. COLLECT: Any Method
+2. PREPARE: This tree-building algorithm works only on nominal values, so any continuous values will need to be quantized.
+3. ANALYZE: Any Method.
+4. TRAIN:   Construct a tree data structure
+5. TEST:    Calculate the error rate with the learned tree.
+6. USE:     This can be used in any supervised learning task. Often, trees are used to better understand the data.
+
+
+
+
+
+
+
+
+NOTES:
+==============================================================================
+The Change in information before and after the split is known as the information gain. The split with the highest information gain is your best option.
+
+Shannon Entropy: The measure of information of a set is known as the Shannon Entropy.   
+Entropy: Expected Value of the information.
+
