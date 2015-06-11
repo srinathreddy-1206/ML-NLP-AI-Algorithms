@@ -1,0 +1,32 @@
+Classifying with distance measurements
+
+K-Nearest Neighbors (KNN)
+=======================================================
+Pros: High Accuracy, insensitive to outliers, no assumptions about data
+Cons: Computationally expensive, requires a lot of memory
+Works with: Numeric Values, Nominal Values
+
+Algorithm in Words
+=============================
+1. We have labels for all of this data - we know what class each piece of the data should fall into. When we're given a new piece of data with out a label, we compare that new piece of data to the existing data (every piece of it in general we measure the distance). We then take the ,most similar pieces of data from our known dataset; this is where the k comes from (in general k<=20), Lastly, we take a majority vote from the k-most similar pieces of data, and the majority is the new class we assign to the data we were asked to clarify.
+
+
+==============================================================================
+Movie Title                     | # of kicks | # of kisses | Type of Movie
+==============================================================================
+California Man                      3               104         Romance
+He's Not Really into Dudes          2               100         Romance
+Amped II                            98              2           Action
+?                                   18              90          Unknown
+
+==========================================
+Movie Title                 | Distance to movie "?"
+===========================================
+California Man                  20.5
+He's Not Really into Dudes      18.7
+Amped II                        118.9
+
+K=2
+Taking the majority, We can conclude that our mystery movie "?" belongs to Romance genre.
+
+
