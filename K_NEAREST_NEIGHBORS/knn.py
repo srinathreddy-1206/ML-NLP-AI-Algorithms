@@ -7,6 +7,15 @@ import unittest
 import matplotlib
 import matplotlib.pyplot as plt
 
+def img_to_vector(filename):
+    return_vector = np.zeros((1,1024))
+    with open(filename, 'r') as fr:
+        for i in range(32):
+            line_str = fr.readline()
+            for j in range(32):
+                return_vector[0, 32*i+j] = int(line_str[j])
+    return return_vector
+
 def scatter_plot(data_matrix,labels):
     labels = [int(label) for label in labels]
     fig = plt.figure()
@@ -68,7 +77,7 @@ class KNNClassifier(object):
         sorted_class_count = sorted(class_count.items(), key = operator.itemgetter(1), reverse=True)
         return sorted_class_count[0]
 
-    def classifier_test(self):
+    def dating_classifier_test(self):
         ho_ratio = 0.1
         self.auto_normalize()
         m=self.normalized_data_set.shape[0] #Rows
@@ -81,6 +90,33 @@ class KNNClassifier(object):
             if classifier_result[0] != self.labels[i]: error_count+=1
         print("The Total error rate is:%f" %(error_count/float(num_test_vecs)))
 
+import os
+def hand_writing_class_test():
+    hw_labels = []
+    training_file_list = os.listdir('digits/training_digits/')
+    m = len(training_file_list)
+    training_matrix = np.zeros((m, 1024))
+    for i in range(m):
+        file_name_str = training_file_list[i]
+        file_str = file_name_str.split('.')[0]
+        class_num_str = int(file_str.split('_')[0])
+        hw_labels.append(class_num_str)
+        training_matrix[i, :] = img_to_vector('digits/training_digits/%s'% file_name_str)
+    test_file_list = os.listdir('digits/test_digits')
+    error_count = 0
+    m_test = len(test_file_list)
+    hw_classifier = KNNClassifier(training_matrix, hw_labels, k=3)
+
+    for i in range(m_test):
+        file_name_str = test_file_list[i]
+        file_str = file_name_str.split('.')[0]
+        class_num_str =int(file_str.split('_')[0])
+        vector_under_test = img_to_vector('digits/test_digits/%s' %(file_name_str))
+        classifier_result =hw_classifier.classify(vector_under_test)
+        print ("The classifier came back with %d,the real answer is: %d" %(classifier_result[0], class_num_str))
+        if (classifier_result[0]!=class_num_str): error_count+=1
+    print ("The Total number of errors is: %d" % error_count)
+    print ("The total error rate is:%f" %(error_count/float(m_test)))
 class KNNClassifierTests(unittest.TestCase):
     def setUp(self):
         group = np.array([[1., 1.1], [1., 1.],[0,0],[0,0.1]])
@@ -93,10 +129,12 @@ class KNNClassifierTests(unittest.TestCase):
 
 if __name__ =="__main__":
     #unittest.main()
+    """
     dating_data_matrix, dating_labels = file_to_matrix('dating_test_set_2.txt')
     print (dating_data_matrix[:20], dating_labels[:20])
     scatter_plot(dating_data_matrix,labels = dating_labels)
     classifier=KNNClassifier(dating_data_matrix, dating_labels,20)
     classifier.classifier_test()
-
+    """
+    hand_writing_class_test()
 
